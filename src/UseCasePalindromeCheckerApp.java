@@ -5,17 +5,26 @@ public class UseCasePalindromeCheckerApp {
         Scanner S = new Scanner(System.in);
         System.out.print("enter the String");
         String input = S.nextLine();
-        String reversed="";
+        char[] chars = input.toCharArray();
+        int start=0;
+        int end = chars.length-1;
+        boolean isPalindrome=true;
 
-        for (int i=input.length()-1;i>=0;i--){
-            reversed=reversed + input.charAt(i);
+        while(start<end){
+           if (chars[start] != chars[end]){
+               isPalindrome=false;
+               break;
+            }
+           start++;
+           end--;
         }
-        if (input.equals(reversed)){
-            System.out.println("Result: The given string is a Palindrome.");
+        if(isPalindrome){
+            System.out.println("Is Palindrome?: True");
         }
         else{
-            System.out.println("Result: The given string is NOT a Palindrome.");
+            System.out.println("Is Palindrome?: False");
         }
+
         S.close();
 
 
