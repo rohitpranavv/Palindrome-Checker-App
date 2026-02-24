@@ -7,26 +7,25 @@ public class UseCasePalindromeCheckerApp {
         System.out.print("enter the String");
         String input = S.nextLine();
 
-        Deque<Character> deque = new ArrayDeque<>();
+        LinkedList<Character> list = new LinkedList<>();
 
         for (char c : input.toCharArray()){
-            deque.add(c);
+            list.add(c);
         }
-        int start = 0;
-        int end = deque.size() -1;
-
 
         boolean isPalindrome=true;
-        while (deque.size()>1){
-            char front= deque.removeFirst();
-            char last = deque.removeLast();
-            if (front != last){
+
+        while (list.size() > 1) {
+
+            char first = list.removeFirst();
+            char last = list.removeLast();
+
+            if (first != last) {
                 isPalindrome = false;
                 break;
             }
-            start++;
-            end--;
         }
+
 
         if(isPalindrome){
             System.out.println("Is Palindrome?: True");
