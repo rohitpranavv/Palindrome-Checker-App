@@ -7,23 +7,25 @@ public class UseCasePalindromeCheckerApp {
         System.out.print("enter the String");
         String input = S.nextLine();
 
-        Stack<Character> stack = new Stack<>();
-        Queue<Character> queue = new LinkedList<>();
+        Deque<Character> deque = new ArrayDeque<>();
 
         for (char c : input.toCharArray()){
-            stack.push(c);
-            queue.add(c);
+            deque.add(c);
         }
+        int start = 0;
+        int end = deque.size() -1;
+
 
         boolean isPalindrome=true;
-        for (char c : input.toCharArray()){
-            char popped = stack.pop();
-            char removed = queue.remove();
-
-            if(removed != popped){
+        while (deque.size()>1){
+            char front= deque.removeFirst();
+            char last = deque.removeLast();
+            if (front != last){
                 isPalindrome = false;
                 break;
             }
+            start++;
+            end--;
         }
 
         if(isPalindrome){
