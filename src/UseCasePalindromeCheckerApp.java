@@ -8,65 +8,71 @@ public class UseCasePalindromeCheckerApp {
         System.out.print("Input : ");
         String input = S.nextLine();
 
-        System.out.print("Choose Strategy (1-Stack, 2-Deque) : ");
-        int choice = S.nextInt();
+        long start, end;
 
-        PalindromeStrategy strategy;
+        start = System.nanoTime();
+        boolean result1 = twoPointerCheck(input);
+        end = System.nanoTime();
+        long time1 = end - start;
 
-        if (choice == 1) {
-            strategy = new StackStrategy();
-        } else {
-            strategy = new DequeStrategy();
-        }
+        start = System.nanoTime();
+        boolean result2 = stackCheck(input);
+        end = System.nanoTime();
+        long time2 = end - start;
 
-        boolean result = strategy.check(input);
+        start = System.nanoTime();
+        boolean result3 = recursiveCheck(input, 0, input.length() - 1);
+        end = System.nanoTime();
+        long time3 = end - start;
 
-        System.out.println("Is Palindrome? : " + result);
+        System.out.println("Two Pointer Result : " + result1);
+        System.out.println("Execution Time (ns) : " + time1);
+
+        System.out.println("Stack Result : " + result2);
+        System.out.println("Execution Time (ns) : " + time2);
+
+        System.out.println("Recursive Result : " + result3);
+        System.out.println("Execution Time (ns) : " + time3);
 
         S.close();
     }
-}
 
-interface PalindromeStrategy {
-    boolean check(String input);
-}
+    private static boolean twoPointerCheck(String input) {
 
-class StackStrategy implements PalindromeStrategy {
+        int start = 0;
+        int end = input.length() - 1;
 
-    public boolean check(String input) {
+        while (start < end) {
+            if (input.charAt(start) != input.charAt(end))
+                return false;
+            start++;
+            end--;
+        }
+        return true;
+    }
+
+    private static boolean stackCheck(String input) {
 
         Stack<Character> stack = new Stack<>();
 
-        for (char c : input.toCharArray()) {
+        for (char c : input.toCharArray())
             stack.push(c);
-        }
 
-        for (char c : input.toCharArray()) {
-            if (c != stack.pop()) {
+        for (char c : input.toCharArray())
+            if (c != stack.pop())
                 return false;
-            }
-        }
 
         return true;
     }
-}
 
-class DequeStrategy implements PalindromeStrategy {
+    private static boolean recursiveCheck(String input, int start, int end) {
 
-    public boolean check(String input) {
+        if (start >= end)
+            return true;
 
-        Deque<Character> deque = new ArrayDeque<>();
+        if (input.charAt(start) != input.charAt(end))
+            return false;
 
-        for (char c : input.toCharArray()) {
-            deque.addLast(c);
-        }
-
-        while (deque.size() > 1) {
-            if (!deque.removeFirst().equals(deque.removeLast())) {
-                return false;
-            }
-        }
-
-        return true;
+        return recursiveCheck(input, start + 1, end - 1);
     }
 }
